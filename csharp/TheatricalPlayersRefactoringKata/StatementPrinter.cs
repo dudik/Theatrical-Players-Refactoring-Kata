@@ -10,7 +10,7 @@ namespace TheatricalPlayersRefactoringKata
         {
             var totalAmount = 0;
             var volumeCredits = 0;
-            var result = string.Format("Statement for {0}\n", invoice.Customer);
+            var result = AddHeader(invoice);
             CultureInfo cultureInfo = new CultureInfo("en-US");
 
             foreach(var perf in invoice.Performances) 
@@ -23,12 +23,35 @@ namespace TheatricalPlayersRefactoringKata
                 totalAmount += thisAmount;
 
                 // print line for this order
-                result += string.Format(cultureInfo, "  {0}: {1:C} ({2} seats)\n", play.Name, Convert.ToDecimal(thisAmount / 100), perf.Audience);
+                result += AddPlay(cultureInfo, play, perf, thisAmount);
             }
             result += string.Format(cultureInfo, "Amount owed is {0:C}\n", Convert.ToDecimal(totalAmount / 100));
             result += string.Format("You earned {0} credits\n", volumeCredits);
             return result;
         }
+
+        private static string AddHeader(Invoice invoice)
+        {
+            return string.Format("Statement for {0}\n", invoice.Customer);
+        }
+
+        private static string AddHeaderHTML(Invoice invoice)
+        {
+             return string.Format("<h1>Statement for {0}</h1>\n", invoice.Customer);
+        }
+
+        private static string AddPlay(CultureInfo cultureInfo, Play play, Performance perf, int thisAmount)
+        {
+            return string.Format(cultureInfo, "  {0}: {1:C} ({2} seats)\n", play.Name, Convert.ToDecimal(thisAmount / 100), perf.Audience);
+        }
+
+        private static string AddPlayHTML(CultureInfo cultureInfo, Play play, Performance perf, int thisAmount)
+        {
+             return string.Format(cultureInfo, "  <tr><td>{0}</td> <td>{1}</td> <td>{2:C}</td></tr>)\n", play.Name, perf.Audience, Convert.ToDecimal(thisAmount / 100));
+        }
+
+
+
 
         private static int CalculateAmount(Play play, Performance perf)
         {
