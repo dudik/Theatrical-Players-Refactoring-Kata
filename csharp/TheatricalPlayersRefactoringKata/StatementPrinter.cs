@@ -34,20 +34,15 @@ namespace TheatricalPlayersRefactoringKata
 
         private static int CalculateAmount(Play play, Performance perf)
         {
-            int thisAmount;
             switch (play.Type)
             {
                 case "tragedy":
-                    thisAmount = CalculateAmountTragedy(perf);
-                    break;
+                    return CalculateAmountTragedy(perf);
                 case "comedy":
-                    thisAmount = CalculateAmountComedy(perf);
-                    break;
+                    return CalculateAmountComedy(perf);
                 default:
                     throw new Exception("unknown type: " + play.Type);
             }
-
-            return thisAmount;
         }
 
         private static int AddExtraCreditComedy(Play play, int volumeCredits, Performance perf)
