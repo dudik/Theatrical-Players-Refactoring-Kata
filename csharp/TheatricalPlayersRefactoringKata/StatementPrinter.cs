@@ -16,8 +16,7 @@ namespace TheatricalPlayersRefactoringKata
             foreach(var perf in invoice.Performances) 
             {
                 var play = plays[perf.PlayID];
-                var thisAmount = 0;
-                thisAmount = CalculateAmount(play, perf);
+                var thisAmount = CalculateAmount(play, perf);
                 // add volume credits
                 volumeCredits += Math.Max(perf.Audience - 30, 0);
                 // add extra credit for every ten comedy attendees
@@ -53,8 +52,7 @@ namespace TheatricalPlayersRefactoringKata
 
         private static int CalculateAmountComedy(Performance perf)
         {
-            int thisAmount;
-            thisAmount = 30000;
+            int thisAmount = 30000;
             if (perf.Audience > 20)
             {
                 thisAmount += 10000 + 500 * (perf.Audience - 20);
@@ -66,8 +64,7 @@ namespace TheatricalPlayersRefactoringKata
 
         private static int CalculateAmountTragedy(Performance perf)
         {
-            int thisAmount;
-            thisAmount = 40000;
+            int thisAmount = 40000;
             if (perf.Audience > 30)
             {
                 thisAmount += 1000 * (perf.Audience - 30);
