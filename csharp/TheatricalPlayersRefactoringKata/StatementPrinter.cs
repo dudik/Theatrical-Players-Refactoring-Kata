@@ -17,17 +17,7 @@ namespace TheatricalPlayersRefactoringKata
             {
                 var play = plays[perf.PlayID];
                 var thisAmount = 0;
-                switch (play.Type) 
-                {
-                    case "tragedy":
-                        thisAmount = CalculateAmountTragedy(perf);
-                        break;
-                    case "comedy":
-                        thisAmount = CalculateAmountComedy(perf);
-                        break;
-                    default:
-                        throw new Exception("unknown type: " + play.Type);
-                }
+                thisAmount = CalculateAmount(play, perf);
                 // add volume credits
                 volumeCredits += Math.Max(perf.Audience - 30, 0);
                 // add extra credit for every ten comedy attendees
@@ -40,6 +30,24 @@ namespace TheatricalPlayersRefactoringKata
             result += string.Format(cultureInfo, "Amount owed is {0:C}\n", Convert.ToDecimal(totalAmount / 100));
             result += string.Format("You earned {0} credits\n", volumeCredits);
             return result;
+        }
+
+        private static int CalculateAmount(Play play, Performance perf)
+        {
+            int thisAmount;
+            switch (play.Type)
+            {
+                case "tragedy":
+                    thisAmount = CalculateAmountTragedy(perf);
+                    break;
+                case "comedy":
+                    thisAmount = CalculateAmountComedy(perf);
+                    break;
+                default:
+                    throw new Exception("unknown type: " + play.Type);
+            }
+
+            return thisAmount;
         }
 
         private static int AddExtraCreditComedy(Play play, int volumeCredits, Performance perf)
